@@ -1,0 +1,180 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import pandas as pd
+import numpy as np
+from sklearn.feature_selection import VarianceThreshold
+from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.linear_model import LogisticRegression, RidgeClassifier
+from xgboost import XGBClassifier
+from sklearn.metrics import f1_score, confusion_matrix
+import mlflow
+import mlflow.sklearn
+
+# --- 1. Feature Selection Workflow ---
+def preprocess_features(X, threshold=0.01):
+    """
+    Apply VarianceThreshold and MinMaxScaler to features.
+    """
+    print("\nApplying VarianceThreshold...")
+    var_thresh = VarianceThreshold(threshold=threshold)
+    X_var = var_thresh.fit_transform(X)
+    print(f"Shape after VarianceThreshold: {X_var.shape}")
+    
+    print("Scaling features with MinMaxScaler...")
+    scaler = MinMaxScaler()
+    X_scaled = scaler.fit_transform(X_var)
+    print(f"Shape after Scaling: {X_scaled.shape}")
+    
+    feature_names = [f"Feature_{i}" for i in range(X_scaled.shape[1])]
+    return pd.DataFrame(X_scaled, columns=feature_names)
+
+def select_features_with_rf(X, y, threshold=0.01):
+    """
+    Select important features using RandomForestRegressor.
+    """
+    print("\nTraining RandomForestRegressor for Feature Importance...")
+    rf = RandomForestRegressor(random_state=42)
+    rf.fit(X, y)
+
+    # Compute feature importances
+    importances = rf.feature_importances_
+    important_features = [name for name, imp in zip(X.columns, importances) if imp > threshold]
+
+    print(f"Selected Features (importance > {threshold}): {important_features}")
+    return X[important_features] if important_features else X
+
+def feature_selection_pipeline(X, y):
+    """
+    Full pipeline: VarianceThreshold -> Scaling -> Feature Importance.
+    """
+    X_preprocessed = preprocess_features(X)
+    X_selected = select_features_with_rf(X_preprocessed, y)
+    print(f"Final Shape After Feature Selection: {X_selected.shape}")
+    return X_selected
+
+# --- 2. MLflow Setup ---
+MLFLOW_TRACKING_URI = "https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow"
+os.environ["MLFLOW_TRACKING_USERNAME"] = "mpadmavathi026"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = "9b42720fee5e34c7387ebe0714d3496686fb1d8a"
+mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+mlflow.set_experiment("bmi_diabetes_prediction")
+
+# --- 3. Train and Log Models ---
+def train_and_log_model(model_name, model, param_grid, X_train, y_train, X_test, y_test, group_name):
+    """
+    Train the model using GridSearchCV, evaluate metrics, and log everything to MLflow.
+    """
+    print(f"\nTraining {model_name} for {group_name} BMI...")
+    grid_search = GridSearchCV(model, param_grid, cv=3, scoring='f1_weighted', verbose=1)
+    grid_search.fit(X_train, y_train)
+
+    # Best Model and Metrics
+    best_model = grid_search.best_estimator_
+    y_pred = best_model.predict(X_test)
+    f1 = f1_score(y_test, y_pred, average='weighted')
+    cm = confusion_matrix(y_test, y_pred)
+
+    # Extract confusion matrix components
+    if cm.shape == (2, 2):  # Binary classification
+        tn, fp, fn, tp = cm.ravel()
+    else:  # Multiclass case (sum as needed)
+        tn, fp, fn, tp = 0, 0, 0, 0  # Placeholders for multiclass confusion matrix
+
+    print(f"F1 Score: {f1:.4f}")
+
+    # MLflow Logging
+    with mlflow.start_run(run_name=f"FS Tuned {model_name}_{group_name}_BMI"):
+        mlflow.log_params(grid_search.best_params_)
+        mlflow.log_metric("F1 Score", f1)
+        mlflow.log_metric("True Positives", tp)
+        mlflow.log_metric("True Negatives", tn)
+        mlflow.log_metric("False Positives", fp)
+        mlflow.log_metric("False Negatives", fn)
+
+        # Log Model
+        mlflow.sklearn.log_model(best_model, f"{model_name}_{group_name}_model")
+        print(f"{model_name} logged successfully for {group_name} BMI!")
+
+# --- 4. Main Workflow ---
+print("\n=== Processing Low BMI Dataset ===")
+X_low_selected = feature_selection_pipeline(X_low, y_low)
+X_train_low, X_test_low, y_train_low, y_test_low = train_test_split(X_low_selected, y_low, test_size=0.2, random_state=42)
+
+print("\n=== Processing High BMI Dataset ===")
+X_high_selected = feature_selection_pipeline(X_high, y_high)
+X_train_high, X_test_high, y_train_high, y_test_high = train_test_split(X_high_selected, y_high, test_size=0.2, random_state=42)
+
+# Define Models and Parameter Grids
+models = {
+    "logistic": LogisticRegression(max_iter=1000, random_state=42),
+    "ridge": RidgeClassifier(random_state=42),
+    "rf": RandomForestClassifier(random_state=42),
+    "xgb": XGBClassifier(eval_metric='mlogloss', random_state=42)
+}
+
+param_grids = {
+    "logistic": {'C': [0.01, 0.1, 1, 10]},
+    "ridge": {'alpha': [0.1, 1.0, 10.0]},
+    "rf": {'n_estimators': [50, 100], 'max_depth': [5, 10, None]},
+    "xgb": {'n_estimators': [50, 100], 'max_depth': [3, 5, 7]}
+}
+
+# Train and Log Models for Low and High BMI
+for model_name, model in models.items():
+    train_and_log_model(
+        model_name=model_name,
+        model=model,
+        param_grid=param_grids[model_name],
+        X_train=X_train_low,
+        y_train=y_train_low,
+        X_test=X_test_low,
+        y_test=y_test_low,
+        group_name="Low"
+    )
+    train_and_log_model(
+        model_name=model_name,
+        model=model,
+        param_grid=param_grids[model_name],
+        X_train=X_train_high,
+        y_train=y_train_high,
+        X_test=X_test_high,
+        y_test=y_test_high,
+        group_name="High"
+    )
+
+print("\nFeature Selection and Model Training Complete. Results logged to MLflow.")
+
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[15], line 57[0m
+[1;32m     55[0m [38;5;66;03m# --- 2. MLflow Setup ---[39;00m
+[1;32m     56[0m MLFLOW_TRACKING_URI [38;5;241m=[39m [38;5;124m"[39m[38;5;124mhttps://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow[39m[38;5;124m"[39m
+[0;32m---> 57[0m os[38;5;241m.[39menviron[[38;5;124m"[39m[38;5;124mMLFLOW_TRACKING_USERNAME[39m[38;5;124m"[39m] [38;5;241m=[39m [38;5;124m"[39m[38;5;124mmpadmavathi026[39m[38;5;124m"[39m
+[1;32m     58[0m os[38;5;241m.[39menviron[[38;5;124m"[39m[38;5;124mMLFLOW_TRACKING_PASSWORD[39m[38;5;124m"[39m] [38;5;241m=[39m [38;5;124m"[39m[38;5;124m9b42720fee5e34c7387ebe0714d3496686fb1d8a[39m[38;5;124m"[39m
+[1;32m     59[0m mlflow[38;5;241m.[39mset_tracking_uri(MLFLOW_TRACKING_URI)
+
+[0;31mNameError[0m: name 'os' is not defined
+
