@@ -1,10 +1,10 @@
 format: jb-book
 root: intro
-options: 
+options:
   numbered: true
 chapters:
   - file: chapters/eas503/eas503
     sections:
-      - file: chapters/eas503/Final_Project_EAS503 final
+      - file: chapters/eas503/Final_Project_EAS503_final
 
 
