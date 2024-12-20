@@ -716,7 +716,7 @@
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="c1"># Step 1: Load the original dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;diabetes_012_health_indicators_BRFSS2021.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;/Users/padmavathimoorthy/Downloads/courses/eas503/diabetes_012_health_indicators_BRFSS2021.csv&quot;</span><span class="p">)</span>
 
 <span class="c1"># Step 2: Normalize into 3NF</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;sqlite:///diabetes_normalized_updated.db&#39;</span><span class="p">)</span>
@@ -783,71 +783,42 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># Step 1: Load the original dataset</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;diabetes_012_health_indicators_BRFSS2021.csv&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="c1"># Step 2: Normalize into 3NF</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;sqlite:///diabetes_normalized_updated.db&#39;</span><span class="p">)</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tables successfully created and populated.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Combined DataFrame Shape: (236378, 22)
+   Age  Sex  Education  Income   BMI  PhysActivity  Smoker  MentHlth  \
+0   11    0        4.0     5.0  15.0             0     1.0      10.0   
+1   11    0        4.0     3.0  28.0             0     0.0       0.0   
+2    9    0        4.0     7.0  33.0             1     0.0      10.0   
+3   12    1        3.0     4.0  29.0             1     0.0       0.0   
+4   13    1        5.0     6.0  24.0             0     1.0       0.0   
 
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1026,</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1013</span> <span class="n">kwds_defaults</span> <span class="o">=</span> <span class="n">_refine_defaults_read</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1014</span>     <span class="n">dialect</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1015</span>     <span class="n">delimiter</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1022</span>     <span class="n">dtype_backend</span><span class="o">=</span><span class="n">dtype_backend</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1023</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1024</span> <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1026</span> <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+   PhysHlth  HighBP  ...  Stroke  HeartDiseaseorAttack  Fruits  Veggies  \
+0      20.0       0  ...     0.0                   0.0       1        1   
+1       0.0       1  ...     0.0                   1.0       1        0   
+2       0.0       1  ...     0.0                   0.0       1        1   
+3      30.0       0  ...     1.0                   1.0       1        1   
+4       0.0       0  ...     0.0                   0.0       0        0   
 
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/pandas/io/parsers/readers.py:620,</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">617</span> <span class="n">_validate_names</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">619</span> <span class="c1"># Create the parser.</span>
-<span class="ne">--&gt; </span><span class="mi">620</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">622</span> <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">623</span>     <span class="k">return</span> <span class="n">parser</span>
+   HvyAlcoholConsump  AnyHealthcare  NoDocbcCost  GenHlth  DiffWalk  \
+0                  0              1          0.0      5.0       0.0   
+1                  0              1          0.0      2.0       0.0   
+2                  0              1          0.0      2.0       0.0   
+3                  0              1          0.0      5.0       1.0   
+4                  0              1          0.0      3.0       1.0   
 
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1620,</span> in <span class="ni">TextFileReader.__init__</span><span class="nt">(self, f, engine, **kwds)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1617</span>     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1619</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">IOHandles</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="ne">-&gt; </span><span class="mi">1620</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+   Diabetes_012  
+0           0.0  
+1           2.0  
+2           2.0  
+3           2.0  
+4           0.0  
 
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1880,</span> in <span class="ni">TextFileReader._make_engine</span><span class="nt">(self, f, engine)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1878</span>     <span class="k">if</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1879</span>         <span class="n">mode</span> <span class="o">+=</span> <span class="s2">&quot;b&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1880</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="o">=</span> <span class="n">get_handle</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1881</span>     <span class="n">f</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1882</span>     <span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1883</span>     <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1884</span>     <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;compression&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1885</span>     <span class="n">memory_map</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1886</span>     <span class="n">is_text</span><span class="o">=</span><span class="n">is_text</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1887</span>     <span class="n">errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1888</span>     <span class="n">storage_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1889</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1890</span> <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="g g-Whitespace">   </span><span class="mi">1891</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">handle</span>
-
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/pandas/io/common.py:873,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">868</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">869</span>     <span class="c1"># Check whether the filename is to be opened in binary mode.</span>
-<span class="g g-Whitespace">    </span><span class="mi">870</span>     <span class="c1"># Binary mode does not support &#39;encoding&#39; and &#39;newline&#39;.</span>
-<span class="g g-Whitespace">    </span><span class="mi">871</span>     <span class="k">if</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span> <span class="ow">and</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">872</span>         <span class="c1"># Encoding</span>
-<span class="ne">--&gt; </span><span class="mi">873</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">874</span>             <span class="n">handle</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">875</span>             <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">876</span>             <span class="n">encoding</span><span class="o">=</span><span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">877</span>             <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">878</span>             <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">879</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">880</span>     <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">881</span>         <span class="c1"># Binary mode</span>
-<span class="g g-Whitespace">    </span><span class="mi">882</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;diabetes_012_health_indicators_BRFSS2021.csv&#39;
+[5 rows x 22 columns]
+Data Ready for Machine Learning Pipeline.
+X_train shape: (189102, 21) y_train shape: (189102,)
+X_test shape: (47276, 21) y_test shape: (47276,)
 </pre></div>
 </div>
 </div>
@@ -894,7 +865,9 @@ dtype: int64
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: ydata-profiling in /opt/anaconda3/lib/python3.12/site-packages (4.12.1)
-Requirement already satisfied: scipy&lt;1.14,&gt;=1.4.1 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (1.13.1)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scipy&lt;1.14,&gt;=1.4.1 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (1.13.1)
 Requirement already satisfied: pandas!=1.4.0,&lt;3,&gt;1.1 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (2.2.2)
 Requirement already satisfied: matplotlib&lt;3.10,&gt;=3.5 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (3.8.4)
 Requirement already satisfied: pydantic&gt;=2 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (2.5.3)
@@ -916,7 +889,9 @@ Requirement already satisfied: dacite&gt;=1.8 in /opt/anaconda3/lib/python3.12/s
 Requirement already satisfied: numba&lt;1,&gt;=0.56.0 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (0.59.1)
 Requirement already satisfied: PyWavelets in /opt/anaconda3/lib/python3.12/site-packages (from imagehash==4.3.1-&gt;ydata-profiling) (1.5.0)
 Requirement already satisfied: pillow in /opt/anaconda3/lib/python3.12/site-packages (from imagehash==4.3.1-&gt;ydata-profiling) (10.3.0)
-Requirement already satisfied: MarkupSafe&gt;=2.0 in /opt/anaconda3/lib/python3.12/site-packages (from jinja2&lt;3.2,&gt;=2.11.1-&gt;ydata-profiling) (2.1.3)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: MarkupSafe&gt;=2.0 in /opt/anaconda3/lib/python3.12/site-packages (from jinja2&lt;3.2,&gt;=2.11.1-&gt;ydata-profiling) (2.1.3)
 Requirement already satisfied: contourpy&gt;=1.0.1 in /opt/anaconda3/lib/python3.12/site-packages (from matplotlib&lt;3.10,&gt;=3.5-&gt;ydata-profiling) (1.2.0)
 Requirement already satisfied: cycler&gt;=0.10 in /opt/anaconda3/lib/python3.12/site-packages (from matplotlib&lt;3.10,&gt;=3.5-&gt;ydata-profiling) (0.11.0)
 Requirement already satisfied: fonttools&gt;=4.22.0 in /opt/anaconda3/lib/python3.12/site-packages (from matplotlib&lt;3.10,&gt;=3.5-&gt;ydata-profiling) (4.51.0)
@@ -930,15 +905,19 @@ Requirement already satisfied: tzdata&gt;=2022.7 in /opt/anaconda3/lib/python3.1
 Requirement already satisfied: joblib&gt;=0.14.1 in /opt/anaconda3/lib/python3.12/site-packages (from phik&lt;0.13,&gt;=0.11.1-&gt;ydata-profiling) (1.4.2)
 Requirement already satisfied: annotated-types&gt;=0.4.0 in /opt/anaconda3/lib/python3.12/site-packages (from pydantic&gt;=2-&gt;ydata-profiling) (0.6.0)
 Requirement already satisfied: pydantic-core==2.14.6 in /opt/anaconda3/lib/python3.12/site-packages (from pydantic&gt;=2-&gt;ydata-profiling) (2.14.6)
-Requirement already satisfied: typing-extensions&gt;=4.6.1 in /opt/anaconda3/lib/python3.12/site-packages (from pydantic&gt;=2-&gt;ydata-profiling) (4.11.0)
+Requirement already satisfied: typing-extensions&gt;=4.6.1 in /opt/anaconda3/lib/python3.12/site-packages (from pydantic&gt;=2-&gt;ydata-profiling) (4.12.2)
 Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in /opt/anaconda3/lib/python3.12/site-packages (from requests&lt;3,&gt;=2.24.0-&gt;ydata-profiling) (2.0.4)
 Requirement already satisfied: idna&lt;4,&gt;=2.5 in /opt/anaconda3/lib/python3.12/site-packages (from requests&lt;3,&gt;=2.24.0-&gt;ydata-profiling) (3.7)
 Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /opt/anaconda3/lib/python3.12/site-packages (from requests&lt;3,&gt;=2.24.0-&gt;ydata-profiling) (2.2.2)
 Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/anaconda3/lib/python3.12/site-packages (from requests&lt;3,&gt;=2.24.0-&gt;ydata-profiling) (2024.7.4)
-Requirement already satisfied: patsy&gt;=0.5.6 in /opt/anaconda3/lib/python3.12/site-packages (from statsmodels&lt;1,&gt;=0.13.2-&gt;ydata-profiling) (0.5.6)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: patsy&gt;=0.5.6 in /opt/anaconda3/lib/python3.12/site-packages (from statsmodels&lt;1,&gt;=0.13.2-&gt;ydata-profiling) (0.5.6)
 Requirement already satisfied: attrs&gt;=19.3.0 in /opt/anaconda3/lib/python3.12/site-packages (from visions&lt;0.7.7,&gt;=0.7.5-&gt;visions[type_image_path]&lt;0.7.7,&gt;=0.7.5-&gt;ydata-profiling) (23.1.0)
 Requirement already satisfied: networkx&gt;=2.4 in /opt/anaconda3/lib/python3.12/site-packages (from visions&lt;0.7.7,&gt;=0.7.5-&gt;visions[type_image_path]&lt;0.7.7,&gt;=0.7.5-&gt;ydata-profiling) (3.2.1)
-Requirement already satisfied: six in /opt/anaconda3/lib/python3.12/site-packages (from patsy&gt;=0.5.6-&gt;statsmodels&lt;1,&gt;=0.13.2-&gt;ydata-profiling) (1.16.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: six in /opt/anaconda3/lib/python3.12/site-packages (from patsy&gt;=0.5.6-&gt;statsmodels&lt;1,&gt;=0.13.2-&gt;ydata-profiling) (1.16.0)
 </pre></div>
 </div>
 </div>
@@ -956,7 +935,7 @@ Requirement already satisfied: six in /opt/anaconda3/lib/python3.12/site-package
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "6eaf0f317c824eaf8352ce8ab76e1d02", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "3fc5139b2bdf4ec7a2974072a34e9c1b", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "83e7ea1a48444094afdb53df6b95eec2", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "5851d515fdb4486f8853e475c330c5b7", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Profiling report saved as &#39;profiling_report.html&#39;. Open it in your browser.
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "db278293f30a4984a78858d85cf1e8fc"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "33279a748b624b3ba87531c249588d9f"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "09b960663aa34fff88868beb79bff639"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "1ba4479f5f4e464e9c1966974cee3853"}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Profiling report saved as &#39;profiling_report.html&#39;. Open it in your browser.
 </pre></div>
 </div>
 </div>
@@ -1698,125 +1677,16 @@ PhysHlth (Physical Health Days) and MentHlth (Mental Health Days) may also have 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== Processing Low BMI Dataset ===
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span> <span class="n">line</span> <span class="mi">57</span>
+<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="c1"># --- 2. MLflow Setup ---</span>
+<span class="g g-Whitespace">     </span><span class="mi">56</span> <span class="n">MLFLOW_TRACKING_URI</span> <span class="o">=</span> <span class="s2">&quot;https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow&quot;</span>
+<span class="ne">---&gt; </span><span class="mi">57</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MLFLOW_TRACKING_USERNAME&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mpadmavathi026&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">58</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MLFLOW_TRACKING_PASSWORD&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;9b42720fee5e34c7387ebe0714d3496686fb1d8a&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">59</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">MLFLOW_TRACKING_URI</span><span class="p">)</span>
 
-Applying VarianceThreshold...
-Shape after VarianceThreshold: (129894, 21)
-Scaling features with MinMaxScaler...
-Shape after Scaling: (129894, 21)
-
-Training RandomForestRegressor for Feature Importance...
-Selected Features (importance &gt; 0.01): [&#39;Feature_0&#39;, &#39;Feature_1&#39;, &#39;Feature_2&#39;, &#39;Feature_3&#39;, &#39;Feature_4&#39;, &#39;Feature_6&#39;, &#39;Feature_7&#39;, &#39;Feature_8&#39;, &#39;Feature_9&#39;, &#39;Feature_10&#39;, &#39;Feature_12&#39;, &#39;Feature_13&#39;, &#39;Feature_14&#39;, &#39;Feature_15&#39;, &#39;Feature_16&#39;, &#39;Feature_17&#39;, &#39;Feature_18&#39;, &#39;Feature_19&#39;, &#39;Feature_20&#39;]
-Final Shape After Feature Selection: (129894, 19)
-
-=== Processing High BMI Dataset ===
-
-Applying VarianceThreshold...
-Shape after VarianceThreshold: (106484, 21)
-Scaling features with MinMaxScaler...
-Shape after Scaling: (106484, 21)
-
-Training RandomForestRegressor for Feature Importance...
-Selected Features (importance &gt; 0.01): [&#39;Feature_0&#39;, &#39;Feature_1&#39;, &#39;Feature_3&#39;, &#39;Feature_4&#39;, &#39;Feature_5&#39;, &#39;Feature_6&#39;, &#39;Feature_7&#39;, &#39;Feature_8&#39;, &#39;Feature_9&#39;, &#39;Feature_10&#39;, &#39;Feature_12&#39;, &#39;Feature_13&#39;, &#39;Feature_14&#39;, &#39;Feature_15&#39;, &#39;Feature_16&#39;, &#39;Feature_17&#39;, &#39;Feature_18&#39;, &#39;Feature_19&#39;, &#39;Feature_20&#39;]
-Final Shape After Feature Selection: (106484, 19)
-
-Training logistic for Low BMI...
-Fitting 3 folds for each of 4 candidates, totalling 12 fits
-F1 Score: 0.5145
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2024/12/17 01:13:31 WARNING mlflow.models.model: Model logged without a signature and input example. Please set `input_example` parameter when logging the model to auto infer the model signature.</span>
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>logistic logged successfully for Low BMI!
-🏃 View run FS Tuned logistic_Low_BMI at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0/runs/03377b3002454ef0baaf9e625ba76cb3
-🧪 View experiment at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0
-
-Training logistic for High BMI...
-Fitting 3 folds for each of 4 candidates, totalling 12 fits
-F1 Score: 0.5062
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2024/12/17 01:13:41 WARNING mlflow.models.model: Model logged without a signature and input example. Please set `input_example` parameter when logging the model to auto infer the model signature.</span>
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>logistic logged successfully for High BMI!
-🏃 View run FS Tuned logistic_High_BMI at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0/runs/499d6b803516464fa2a3cc7658d340ee
-🧪 View experiment at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0
-
-Training ridge for Low BMI...
-Fitting 3 folds for each of 3 candidates, totalling 9 fits
-F1 Score: 0.5145
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2024/12/17 01:13:57 WARNING mlflow.models.model: Model logged without a signature and input example. Please set `input_example` parameter when logging the model to auto infer the model signature.</span>
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ridge logged successfully for Low BMI!
-🏃 View run FS Tuned ridge_Low_BMI at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0/runs/558a7af96fdd433581fa1514d353dfe9
-🧪 View experiment at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0
-
-Training ridge for High BMI...
-Fitting 3 folds for each of 3 candidates, totalling 9 fits
-F1 Score: 0.5061
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2024/12/17 01:14:13 WARNING mlflow.models.model: Model logged without a signature and input example. Please set `input_example` parameter when logging the model to auto infer the model signature.</span>
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ridge logged successfully for High BMI!
-🏃 View run FS Tuned ridge_High_BMI at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0/runs/4c57a4c4b60844059e42c576c112cdf2
-🧪 View experiment at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0
-
-Training rf for Low BMI...
-Fitting 3 folds for each of 6 candidates, totalling 18 fits
-F1 Score: 0.5127
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2024/12/17 01:14:58 WARNING mlflow.models.model: Model logged without a signature and input example. Please set `input_example` parameter when logging the model to auto infer the model signature.</span>
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rf logged successfully for Low BMI!
-🏃 View run FS Tuned rf_Low_BMI at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0/runs/05896f19e08a4e6a82541a538f740bab
-🧪 View experiment at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0
-
-Training rf for High BMI...
-Fitting 3 folds for each of 6 candidates, totalling 18 fits
-F1 Score: 0.5104
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2024/12/17 01:15:43 WARNING mlflow.models.model: Model logged without a signature and input example. Please set `input_example` parameter when logging the model to auto infer the model signature.</span>
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rf logged successfully for High BMI!
-🏃 View run FS Tuned rf_High_BMI at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0/runs/3dd0679a9a074320bb01d2c0311e2c83
-🧪 View experiment at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0
-
-Training xgb for Low BMI...
-Fitting 3 folds for each of 6 candidates, totalling 18 fits
-F1 Score: 0.5110
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2024/12/17 01:15:58 WARNING mlflow.models.model: Model logged without a signature and input example. Please set `input_example` parameter when logging the model to auto infer the model signature.</span>
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>xgb logged successfully for Low BMI!
-🏃 View run FS Tuned xgb_Low_BMI at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0/runs/d776132973db4f98bd8bfc27f36313cf
-🧪 View experiment at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0
-
-Training xgb for High BMI...
-Fitting 3 folds for each of 6 candidates, totalling 18 fits
-F1 Score: 0.5084
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">2024/12/17 01:16:10 WARNING mlflow.models.model: Model logged without a signature and input example. Please set `input_example` parameter when logging the model to auto infer the model signature.</span>
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>xgb logged successfully for High BMI!
-🏃 View run FS Tuned xgb_High_BMI at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0/runs/6bd60a844b1a4747b0be972bdaac54ed
-🧪 View experiment at: https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow/#/experiments/0
-
-Feature Selection and Model Training Complete. Results logged to MLflow.
+<span class="ne">NameError</span>: name &#39;os&#39; is not defined
 </pre></div>
 </div>
 </div>
