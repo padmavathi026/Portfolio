@@ -19,17 +19,85 @@ Traceback (most recent call last):
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
 import pandas as pd
-df = pd.read_csv("diabetes_012_health_indicators_BRFSS2021.csv")
-df
+from sqlalchemy import create_engine
+from sklearn.model_selection import train_test_split
+
+# Step 1: Load the original dataset
+df = pd.read_csv('diabetes_012_health_indicators_BRFSS2021.csv')
+
+# Step 2: Normalize into 3NF
+engine = create_engine('sqlite:///diabetes_normalized_updated.db')
+
+# Create 'demographics' table
+demographics = df[['Age', 'Sex', 'Education', 'Income']].copy()
+demographics['id'] = range(1, len(demographics) + 1)
+
+# Create 'health_indicators' table
+health_indicators = df[['BMI', 'PhysActivity', 'Smoker', 'MentHlth', 
+                        'PhysHlth', 'HighBP', 'HighChol']].copy()
+health_indicators['id'] = demographics['id']
+
+# Create 'other_features' table (remaining features if any)
+other_features = df.drop(columns=['Age', 'Sex', 'Education', 'Income', 
+                                  'BMI', 'PhysActivity', 'Smoker', 'MentHlth', 
+                                  'PhysHlth', 'HighBP', 'HighChol', 'Diabetes_012'])
+other_features['id'] = demographics['id']
+
+# Create 'diabetes_status' table
+diabetes_status = df[['Diabetes_012']].copy()
+diabetes_status['id'] = demographics['id']
+
+# Populate Normalized Tables
+demographics.to_sql('demographics', engine, if_exists='replace', index=False)
+health_indicators.to_sql('health_indicators', engine, if_exists='replace', index=False)
+other_features.to_sql('other_features', engine, if_exists='replace', index=False)
+diabetes_status.to_sql('diabetes_status', engine, if_exists='replace', index=False)
+
+print("Tables successfully created and populated.")
+
+# Step 3: Retrieve Combined Data Back Using SQL JOIN
+query = """
+SELECT d.id, d.Age, d.Sex, d.Education, d.Income,
+       h.BMI, h.PhysActivity, h.Smoker, h.MentHlth, h.PhysHlth, h.HighBP, h.HighChol,
+       o.*, ds.Diabetes_012
+FROM demographics d
+JOIN health_indicators h ON d.id = h.id
+JOIN other_features o ON d.id = o.id
+JOIN diabetes_status ds ON d.id = ds.id
+"""
+
+# Retrieve Combined DataFrame
+combined_df = pd.read_sql_query(query, engine)
+
+# Drop 'id' to match the original DataFrame structure
+combined_df = combined_df.drop(columns=['id'])
+
+# Verify the result
+print("Combined DataFrame Shape:", combined_df.shape)
+print(combined_df.head())
+
+# Step 4: Split into Features and Target for ML Pipeline
+X = combined_df.drop(columns=['Diabetes_012'])  # Features
+y = combined_df['Diabetes_012']                # Target
+
+# Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+
+print("Data Ready for Machine Learning Pipeline.")
+print("X_train shape:", X_train.shape, "y_train shape:", y_train.shape)
+print("X_test shape:", X_test.shape, "y_test shape:", y_test.shape)
+
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mFileNotFoundError[0m                         Traceback (most recent call last)
-Cell [0;32mIn[1], line 2[0m
-[1;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpd[39;00m
-[0;32m----> 2[0m df [38;5;241m=[39m pd[38;5;241m.[39mread_csv([38;5;124m"[39m[38;5;124mdiabetes_012_health_indicators_BRFSS2021.csv[39m[38;5;124m"[39m)
-[1;32m      3[0m df
+Cell [0;32mIn[2], line 6[0m
+[1;32m      3[0m [38;5;28;01mfrom[39;00m [38;5;21;01msklearn[39;00m[38;5;21;01m.[39;00m[38;5;21;01mmodel_selection[39;00m [38;5;28;01mimport[39;00m train_test_split
+[1;32m      5[0m [38;5;66;03m# Step 1: Load the original dataset[39;00m
+[0;32m----> 6[0m df [38;5;241m=[39m pd[38;5;241m.[39mread_csv([38;5;124m'[39m[38;5;124mdiabetes_012_health_indicators_BRFSS2021.csv[39m[38;5;124m'[39m)
+[1;32m      8[0m [38;5;66;03m# Step 2: Normalize into 3NF[39;00m
+[1;32m      9[0m engine [38;5;241m=[39m create_engine([38;5;124m'[39m[38;5;124msqlite:///diabetes_normalized_updated.db[39m[38;5;124m'[39m)
 
 File [0;32m/opt/anaconda3/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1026[0m, in [0;36mread_csv[0;34m(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)[0m
 [1;32m   1013[0m kwds_defaults [38;5;241m=[39m _refine_defaults_read(
