@@ -856,11 +856,11 @@ dtype: int64
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scipy&lt;1.14,&gt;=1.4.1 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (1.13.1)
+Requirement already satisfied: pandas!=1.4.0,&lt;3,&gt;1.1 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (2.2.2)
+Requirement already satisfied: matplotlib&lt;3.10,&gt;=3.5 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (3.8.4)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pandas!=1.4.0,&lt;3,&gt;1.1 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (2.2.2)
-Requirement already satisfied: matplotlib&lt;3.10,&gt;=3.5 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (3.8.4)
-Requirement already satisfied: pydantic&gt;=2 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (2.5.3)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pydantic&gt;=2 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (2.5.3)
 Requirement already satisfied: PyYAML&lt;6.1,&gt;=5.0.0 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (6.0.1)
 Requirement already satisfied: jinja2&lt;3.2,&gt;=2.11.1 in /opt/anaconda3/lib/python3.12/site-packages (from ydata-profiling) (3.1.4)
 Requirement already satisfied: visions&lt;0.7.7,&gt;=0.7.5 in /opt/anaconda3/lib/python3.12/site-packages (from visions[type_image_path]&lt;0.7.7,&gt;=0.7.5-&gt;ydata-profiling) (0.7.6)
@@ -903,7 +903,9 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/anaconda3/lib/pytho
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: patsy&gt;=0.5.6 in /opt/anaconda3/lib/python3.12/site-packages (from statsmodels&lt;1,&gt;=0.13.2-&gt;ydata-profiling) (0.5.6)
-Requirement already satisfied: attrs&gt;=19.3.0 in /opt/anaconda3/lib/python3.12/site-packages (from visions&lt;0.7.7,&gt;=0.7.5-&gt;visions[type_image_path]&lt;0.7.7,&gt;=0.7.5-&gt;ydata-profiling) (23.1.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: attrs&gt;=19.3.0 in /opt/anaconda3/lib/python3.12/site-packages (from visions&lt;0.7.7,&gt;=0.7.5-&gt;visions[type_image_path]&lt;0.7.7,&gt;=0.7.5-&gt;ydata-profiling) (23.1.0)
 Requirement already satisfied: networkx&gt;=2.4 in /opt/anaconda3/lib/python3.12/site-packages (from visions&lt;0.7.7,&gt;=0.7.5-&gt;visions[type_image_path]&lt;0.7.7,&gt;=0.7.5-&gt;ydata-profiling) (3.2.1)
 </pre></div>
 </div>
@@ -925,7 +927,7 @@ Requirement already satisfied: networkx&gt;=2.4 in /opt/anaconda3/lib/python3.12
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "8bb9df620d9849878e16e819a7ea907a"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "66356b0165044793a81acd2ec7764226"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "8b2e30ffac2345e88743eb990afa6df8"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "b2ea3cc06b4f4a99aebbcbfb68312c8e"}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Profiling report saved as &#39;profiling_report.html&#39;. Open it in your browser.
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "d29e4165e84f4a6eb9264ea01d5dbbcf"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "9f988cd36b1f4c8dbbc00bf9447d2e8a"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "529a282ffd1c4bf0a2339b584bd73a48"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "6b3124e8885e448faab2d3a06664f5e8"}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Profiling report saved as &#39;profiling_report.html&#39;. Open it in your browser.
 </pre></div>
 </div>
 </div>
@@ -1667,27 +1669,14 @@ Shape after Scaling: (129894, 21)
 Training RandomForestRegressor for Feature Importance...
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Selected Features (importance &gt; 0.01): [&#39;Feature_0&#39;, &#39;Feature_1&#39;, &#39;Feature_3&#39;, &#39;Feature_4&#39;, &#39;Feature_5&#39;, &#39;Feature_6&#39;, &#39;Feature_7&#39;, &#39;Feature_8&#39;, &#39;Feature_9&#39;, &#39;Feature_10&#39;, &#39;Feature_12&#39;, &#39;Feature_13&#39;, &#39;Feature_14&#39;, &#39;Feature_15&#39;, &#39;Feature_16&#39;, &#39;Feature_17&#39;, &#39;Feature_18&#39;, &#39;Feature_19&#39;, &#39;Feature_20&#39;]
-Final Shape After Feature Selection: (129894, 19)
-
-=== Processing High BMI Dataset ===
-
-Applying VarianceThreshold...
-Shape after VarianceThreshold: (106484, 21)
-Scaling features with MinMaxScaler...
-Shape after Scaling: (106484, 21)
-
-Training RandomForestRegressor for Feature Importance...
-</pre></div>
-</div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span> <span class="n">line</span> <span class="mi">105</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span> <span class="n">line</span> <span class="mi">101</span>
+<span class="g g-Whitespace">     </span><span class="mi">99</span> <span class="c1"># --- 4. Main Workflow ---</span>
+<span class="g g-Whitespace">    </span><span class="mi">100</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== Processing Low BMI Dataset ===&quot;</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">101</span> <span class="n">X_low_selected</span> <span class="o">=</span> <span class="n">feature_selection_pipeline</span><span class="p">(</span><span class="n">X_low</span><span class="p">,</span> <span class="n">y_low</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">102</span> <span class="n">X_train_low</span><span class="p">,</span> <span class="n">X_test_low</span><span class="p">,</span> <span class="n">y_train_low</span><span class="p">,</span> <span class="n">y_test_low</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_low_selected</span><span class="p">,</span> <span class="n">y_low</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">104</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== Processing High BMI Dataset ===&quot;</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">105</span> <span class="n">X_high_selected</span> <span class="o">=</span> <span class="n">feature_selection_pipeline</span><span class="p">(</span><span class="n">X_high</span><span class="p">,</span> <span class="n">y_high</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">106</span> <span class="n">X_train_high</span><span class="p">,</span> <span class="n">X_test_high</span><span class="p">,</span> <span class="n">y_train_high</span><span class="p">,</span> <span class="n">y_test_high</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_high_selected</span><span class="p">,</span> <span class="n">y_high</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">108</span> <span class="c1"># Define Models and Parameter Grids</span>
 
 <span class="nn">Cell In[15], line 52,</span> in <span class="ni">feature_selection_pipeline</span><span class="nt">(X, y)</span>
 <span class="g g-Whitespace">     </span><span class="mi">48</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
