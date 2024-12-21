@@ -37,7 +37,7 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['import pandas as pd', 'import numpy as np', 'from sklearn.feature_selection import VarianceThreshold', 'from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier', 'from sklearn.model_selection import train_test_split, GridSearchCV']
+['# --- 2. MLflow Setup ---', 'MLFLOW_TRACKING_URI = "https://dagshub.com/mpadmavathi026/Fall2024_diabetes_model.mlflow"', 'os.environ["MLFLOW_TRACKING_USERNAME"] = "mpadmavathi026"', 'os.environ["MLFLOW_TRACKING_PASSWORD"] = "9b42720fee5e34c7387ebe0714d3496686fb1d8a"', 'mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)']
 ...
 ['        y_test=y_test_high,', '        group_name="High"', '    )', '', 'print("\\nFeature Selection and Model Training Complete. Results logged to MLflow.")']
 -------------------
